@@ -2,16 +2,23 @@ import React from "react";
 import userAvatar from "../images/user-avatar2.png";
 
 const ContactCard = (props) => {
-    console.log('props card', props);
     const { id, name, email } = props.contact;
+
+    const deleteHandler = () => {
+        props.deleteHandler(id);
+    }
+
     return (
-        <div class="item">
-            <div class="right floated content">
-                <i className="trash alternate outline icon" style={{ color: "red", marginTop: "7px" }}></i>
+        <div className="item">
+            <div className="right floated content">
+                <i className="trash alternate outline icon" 
+                style={{ color: "red", marginTop: "7px", cursor: 'pointer' }}
+                onClick={deleteHandler}
+                ></i>
             </div>
-            <img class="ui avatar image" src={userAvatar} alt
+            <img className="ui avatar image" src={userAvatar} alt="user-avatar"
             />
-            <div class="content">
+            <div className="content">
                 <div className="header">
                     {name}
                 </div>
