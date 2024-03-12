@@ -1,6 +1,6 @@
 import React from 'react'
 import userAvatar from '../images/user-avatar.png'
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const ContactDetail = (props) => {
     console.log("props in ContactDetail", props)
@@ -18,6 +18,11 @@ const ContactDetail = (props) => {
                     <div className='header'>{name}</div>
                     <div className='description'>{email}</div>
                 </div>
+            </div>
+            <div className='center-div'>
+                <Link to="/">
+                    <button className='ui button blue center'>Back to Contact List</button>
+                </Link>
             </div>
         </div>
     )

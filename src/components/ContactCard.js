@@ -6,7 +6,10 @@ const ContactCard = (props) => {
     const { id, name, email } = props.contact;
 
     const deleteHandler = () => {
-        props.deleteHandler(id);
+        let confirm = window.confirm("Do you want to delete contact?");
+        if (confirm) {
+            props.deleteHandler(id);
+        }
     }
 
     return (
