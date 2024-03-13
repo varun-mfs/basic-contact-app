@@ -1,32 +1,39 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 
-const AddContact = (props) => {
-
+const EditContact = (props) => {
+    const location = useLocation();
+    console.log("first inside EditContact", location.state.contact)
+    const { id, name, email } = location.state.contact;
+    console.log("id, name, email", id, name, email)
     const [state, setState] = useState({
-        name: "",
-        email: ""
+        id,
+        name,
+        email
     });
+    console.log("🚀 ~ file: EditContact.js:15 ~ EditContact ~ state:", state)
+
     const navigate = useNavigate();
 
-    const add = (e) => {
+    const update = (e) => {
         e.preventDefault(); // prevents page refresh
-        if (state.name === "" || state.email === "") {
+        if (!state.name || !state.email || !state.id) {
             alert('All fields are mandatory');
             return;
         }
         // call the parent function to save the state to contacts
-        props.addContactHandler(state);
+        props.editContactHandler(state);
         // clear the fields
-        setState({ name: "", email: "" });
+        // setState({ name: "", email: "" });
         // Go to contact list page
         navigate("/")
     }
+
     return (
         <div className="ui main">
-            <h2>Add Contact</h2>
-            <form className="ui form" onSubmit={add}>
+            <h2>Edit Contact</h2>
+            <form className="ui form" onSubmit={update}>
                 <div className="field">
                     <label>Name</label>
                     <input type="text" name="name" placeholder="Enter name"
@@ -37,12 +44,12 @@ const AddContact = (props) => {
                     <label>Email</label>
                     <input type="email" name="email" placeholder="Enter email"
                         value={state.email}
-                        onChange={(e) => { setState((prevState) => ({...prevState, email: e.target.value})) }} />
+                        onChange={(e) => { setState((prevState) => ({ ...prevState, email: e.target.value })) }} />
                 </div>
-                <button className="ui button blue">Add Contact</button>
+                <button className="ui button blue">Update Contact</button>
             </form>
         </div>
     )
 }
 
-export default AddContact;
+export default EditContact;

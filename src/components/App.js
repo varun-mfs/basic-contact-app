@@ -5,6 +5,7 @@ import Header from './Header';
 import AddContact from './AddContact';
 import ContactList from './ContactList';
 import ContactDetail from './ContactDetail';
+import EditContact from './EditContact';
 
 
 function App() {
@@ -18,6 +19,16 @@ function App() {
 
 	const addContactHandler = (contact) => {
 		const updatedContacts = [...contacts, { id: crypto.randomUUID(), ...contact }];
+		setContacts(updatedContacts);
+		updateContactsToLocalStorage(updatedContacts);
+	}
+
+	const editContactHandler = (contact) => {
+		console.log("editContactHandler contact", contact)
+		console.log("editContactHandler typeof contact", typeof contact)
+		const updatedContacts = contacts.map((object) => {
+			return (object.id === contact.id) ? contact : object;
+		});
 		setContacts(updatedContacts);
 		updateContactsToLocalStorage(updatedContacts);
 	}
@@ -47,6 +58,7 @@ function App() {
 			<Routes>
 				<Route index path="/" element={<ContactList contacts={contacts} getContactId={removeContactHandler} />} />
 				<Route path="/add" element={<AddContact addContactHandler={addContactHandler} />} />
+				<Route path="/edit" element={<EditContact editContactHandler={editContactHandler} />} />
 				<Route path="/contact/:id" element={<ContactDetail />} />
 			</Routes>
 		</div>
