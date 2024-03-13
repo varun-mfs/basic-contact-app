@@ -10,6 +10,8 @@ import EditContact from './EditContact';
 
 function App() {
 	const [contacts, setContacts] = useState([]);
+	const [searchQuery, setSearchQuery] = useState('');
+	const [searchResults, setSearchResults] = useState([]);
 	const LOCAL_STORAGE_KEY = "contacts";
 
 	const updateContactsToLocalStorage = (contacts) => {
@@ -39,6 +41,23 @@ function App() {
 		updateContactsToLocalStorage(newContactList);
 	}
 
+	// to search the contact
+	const searchHandler = (searchTerm) => {
+		console.log("🚀 ~ file: App.js:45 ~ searchHandler ~ searchTerm:", searchTerm);
+		setSearchQuery(searchTerm);
+		if (searchTerm !== '') {
+			const newContactList = contacts.filter((contact) => {
+				return Object.values(contact)
+					.join(" ")
+					.toLowerCase()
+					.includes(searchTerm.toLowerCase());
+			})
+			setSearchResults(newContactList)
+		} else {
+			setSearchResults(contacts)
+		}
+	}
+
 	// fetch data from local storage on page refresh
 	useEffect(() => {
 		const retrievedContacts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
@@ -52,7 +71,13 @@ function App() {
 		<div className='ui container'>
 			<Header />
 			<Routes>
-				<Route index path="/" element={<ContactList contacts={contacts} getContactId={removeContactHandler} />} />
+				<Route index path="/" element={
+					<ContactList contacts={searchQuery.length < 1 ? contacts : searchResults}
+						getContactId={removeContactHandler}
+						searchQuery={searchQuery}
+						searchHandler={searchHandler}
+					/>
+				} />
 				<Route path="/add" element={<AddContact addContactHandler={addContactHandler} />} />
 				<Route path="/edit" element={<EditContact editContactHandler={editContactHandler} />} />
 				<Route path="/contact/:id" element={<ContactDetail />} />
