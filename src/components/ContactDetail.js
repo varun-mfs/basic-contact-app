@@ -3,10 +3,8 @@ import userAvatar from '../images/user-avatar.png'
 import { Link, useLocation } from "react-router-dom";
 
 const ContactDetail = (props) => {
-    console.log("props in ContactDetail", props)
     const location = useLocation();
     const { id, name, email } = location.state.contact;
-    // console.log("props in ContactDetail location", location);
     return (
         <div className='main'>
             <h2>Contact Detail</h2>

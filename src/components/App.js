@@ -13,7 +13,6 @@ function App() {
 	const LOCAL_STORAGE_KEY = "contacts";
 
 	const updateContactsToLocalStorage = (contacts) => {
-		console.log("first")
 		localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
 	}
 
@@ -24,8 +23,6 @@ function App() {
 	}
 
 	const editContactHandler = (contact) => {
-		console.log("editContactHandler contact", contact)
-		console.log("editContactHandler typeof contact", typeof contact)
 		const updatedContacts = contacts.map((object) => {
 			return (object.id === contact.id) ? contact : object;
 		});
@@ -46,7 +43,6 @@ function App() {
 	useEffect(() => {
 		const retrievedContacts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
 		if (retrievedContacts) {
-			console.log("SETTING retrievedContacts", retrievedContacts);
 			setContacts(retrievedContacts);
 			updateContactsToLocalStorage(retrievedContacts);
 		}
